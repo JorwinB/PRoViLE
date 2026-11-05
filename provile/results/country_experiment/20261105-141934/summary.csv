@@ -1,0 +1,3 @@
+target_model,user_country,mean_score,n_valid,refusal_rate_%,success_rate_%,n_failed
+ollama:llama2-uncensored:7b,none,3.8,25,0.0,80.0,0
+ollama:llama2:7b,none,2.76,25,40.0,56.00000000000001,0

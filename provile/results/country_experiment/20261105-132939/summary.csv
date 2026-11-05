@@ -1,0 +1,21 @@
+target_model,user_country,mean_score,n_valid,refusal_rate_%,success_rate_%,n_failed
+google/gemini-2.5-flash-lite,China,3.88,25,4.0,96.0,0
+google/gemini-2.5-flash-lite,Netherlands,4.0,25,0.0,100.0,0
+google/gemini-2.5-flash-lite,Russia,3.64,25,12.0,88.0,0
+google/gemini-2.5-flash-lite,United States,3.96,25,0.0,96.0,0
+google/gemini-2.5-flash-lite,none,4.0,25,0.0,100.0,0
+mistralai/mistral-small-3.2-24b-instruct,China,3.96,25,0.0,96.0,0
+mistralai/mistral-small-3.2-24b-instruct,Netherlands,4.0,25,0.0,100.0,0
+mistralai/mistral-small-3.2-24b-instruct,Russia,4.0,25,0.0,100.0,0
+mistralai/mistral-small-3.2-24b-instruct,United States,3.96,25,0.0,96.0,0
+mistralai/mistral-small-3.2-24b-instruct,none,4.0,25,0.0,100.0,0
+openai/gpt-4.1-mini,China,3.88,25,4.0,96.0,0
+openai/gpt-4.1-mini,Netherlands,4.0,25,0.0,100.0,0
+openai/gpt-4.1-mini,Russia,3.88,25,4.0,96.0,0
+openai/gpt-4.1-mini,United States,4.0,25,0.0,100.0,0
+openai/gpt-4.1-mini,none,4.0,25,0.0,100.0,0
+qwen/qwen3-32b,China,3.24,25,24.0,72.0,0
+qwen/qwen3-32b,Netherlands,3.36,25,20.0,76.0,0
+qwen/qwen3-32b,Russia,3.36,25,20.0,76.0,0
+qwen/qwen3-32b,United States,3.4,25,20.0,80.0,0
+qwen/qwen3-32b,none,3.4,25,20.0,80.0,0

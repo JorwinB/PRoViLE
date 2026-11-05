@@ -27,7 +27,7 @@ class LLMClient(Protocol):
     def invoke(self, content: str) -> str: ...
 
 
-def get_LLM(source: str, model: str) -> LLMClient:
+def get_LLM(source: str, model: str, temperature: float | None = None) -> LLMClient:
     llm: LLMClient
 
     if source == "OpenRouter":
@@ -41,10 +41,11 @@ def get_LLM(source: str, model: str) -> LLMClient:
             base_url="https://openrouter.ai/api/v1",
             api_key=api_key,
             llm_model=model,
+            temperature=temperature,
         )
 
     elif source == "Ollama":
-        llm = OllamaLLM(llm_model=model)
+        llm = OllamaLLM(llm_model=model, temperature=temperature)
 
     else:
         raise ValueError(f"Unsupported LLM source: {source}")
@@ -53,9 +54,17 @@ def get_LLM(source: str, model: str) -> LLMClient:
 
 
 class LLM:
-    def __init__(self, base_url: str, api_key: str, llm_model: str):
+    def __init__(
+        self,
+        base_url: str,
+        api_key: str,
+        llm_model: str,
+        temperature: float | None = None,
+    ):
         self.client = OpenAI(base_url=base_url, api_key=api_key)
         self.model = llm_model
+        # None = provider default; 0 makes e.g. the judge (more) deterministic
+        self.temperature = temperature
 
     def invoke(self, content: str) -> str:
         answer = "[ERROR] NO RESPONSE CREATED"
@@ -66,7 +75,15 @@ class LLM:
         for _ in range(max_tries):
             try:
                 content_value = (
-                    self.client.chat.completions.create(model=self.model, messages=messages)  # type: ignore[arg-type]
+                    self.client.chat.completions.create(  # type: ignore[call-overload]
+                        model=self.model,
+                        messages=messages,  # type: ignore[arg-type]
+                        **(
+                            {"temperature": self.temperature}
+                            if self.temperature is not None
+                            else {}
+                        ),
+                    )
                     .choices[0]
                     .message.content
                 )
@@ -79,8 +96,12 @@ class LLM:
 
 
 class OllamaLLM:
-    def __init__(self, llm_model: str):
-        self.client = ChatOllama(model=llm_model)
+    def __init__(self, llm_model: str, temperature: float | None = None):
+        self.client = (
+            ChatOllama(model=llm_model, temperature=temperature)
+            if temperature is not None
+            else ChatOllama(model=llm_model)
+        )
         self.model = llm_model
 
     def invoke(self, content: str) -> str:
