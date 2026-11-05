@@ -127,3 +127,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+.env.*
+!.env.example
+provile/results/
+provile/logs/
